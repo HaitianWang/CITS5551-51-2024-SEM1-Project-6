@@ -7,5 +7,6 @@ Project Requirement List
 
 send email to the Atif and client
 They still not reply or response to me.
+Complete the Project Proposal Document and Discussion Document with client.
 ...
 
