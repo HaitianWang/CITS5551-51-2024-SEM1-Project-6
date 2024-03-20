@@ -8,5 +8,6 @@ Project Requirement List
 send email to the Atif and client
 They still not reply or response to me.
 Complete the Project Proposal Document and Discussion Document with client.
+They replied and we scheduled to meeting in 21/03/2024 at noon.
 ...
 
