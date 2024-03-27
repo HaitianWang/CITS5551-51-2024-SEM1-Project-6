@@ -13,5 +13,6 @@ We have finished the meeting with client this afternoon. It is out our expect an
 We need to do more literature research next week.
 Find the proper critierian for out project。
 They do not answer me any of the email.
+They answered but only focus on few questions not all
 ......
 
