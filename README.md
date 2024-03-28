@@ -14,5 +14,6 @@ We need to do more literature research next week.
 Find the proper critierian for out project。
 They do not answer me any of the email.
 They answered but only focus on few questions not all.
+Focus on Project Proposal Document.
 ......
 
