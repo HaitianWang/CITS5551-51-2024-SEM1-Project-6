@@ -16,5 +16,6 @@ They do not answer me any of the email.
 They answered but only focus on few questions not all.
 Focus on Project Proposal Document.
 Firstly, focus on one simple thing.
+Host meeting on the Wednesday this week.
 ......
 
