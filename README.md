@@ -17,5 +17,6 @@ They answered but only focus on few questions not all.
 Focus on Project Proposal Document.
 Firstly, focus on one simple thing.
 Host meeting on the Wednesday this week.
+We found a way to semented and annotated the whole images.
 ......
 
