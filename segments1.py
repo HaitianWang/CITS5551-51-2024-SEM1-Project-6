@@ -32,8 +32,8 @@ def split_image(image_path, output_folder, tile_size_x, tile_size_y):
             save_tile(window, transform, out_path, src)
 
 # Use raw string literals for Windows paths
-image_path = r'C:\Simon\Master of Professional Engineering\Software Design Project\Image Dataset\2020 07 30 Kondinin E2 RGB.tif'
-output_folder = r'C:\Simon\Master of Professional Engineering\Software Design Project\Image Dataset\2020 07 30 Kondinin E2 RGB Split'
+image_path = r'C:\UWA\GENG 5551\RGB Original\2020 07 30 Kondinin E2 RGB.tif'
+output_folder = r'C:\UWA\GENG 5551\2020 RGB Split'
 tile_size_x = 256  # Tile width in pixels
 tile_size_y = 256  # Tile height in pixels
 split_image(image_path, output_folder, tile_size_x, tile_size_y)

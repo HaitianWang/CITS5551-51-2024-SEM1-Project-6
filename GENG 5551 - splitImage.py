@@ -2,11 +2,11 @@ from cv2 import cv2
 import numpy as np
 import os
  
-pic_path = 'E:\\UWA\\GENG 5551\\2020 07 30 Kondinin E2 RGB.tif' 
+pic_path = 'C:\\UWA\\GENG 5551\\RGB Original\\2020 07 30 Kondinin E2 RGB.tif' 
 
 if pic_path is None:
     raise ValueError('Failed to read image.')
-pic_target = 'E:\\UWA\\GENG 5551\\2020 RGB' # 分割后的图片保存的文件夹
+pic_target = 'C:\\UWA\\GENG 5551\\2020 RGB Split Jpg' # 分割后的图片保存的文件夹
 if not os.path.exists(pic_target):  #判断是否存在文件夹如果不存在则创建为文件夹
     os.makedirs(pic_target)
 #要分割后的尺寸
