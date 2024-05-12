@@ -2,8 +2,8 @@ import rasterio
 import numpy as np
 import matplotlib.pyplot as plt
 
-red_path = "result_Red.tif"  # Red channel file path
-nir_path = "result_NIR.tif"  # NIR channel file path
+red_path = ""  # Input your own Red channel file path
+nir_path = ""  # Input your own NIR channel file path
 
 # Open red channel TIF file
 with rasterio.open(red_path) as red_ds:
