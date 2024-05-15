@@ -82,7 +82,7 @@ def main(base_path):
 
 
 # Specify the base path where the folders are located 路径改这里
-base_path = '/Users/lunaxu/Desktop/seg_pics_color_copy2'
+base_path = r'E:\UWA\GENG 5551\2021 09 06 Test Split'
 
 # Run the main function
 main(base_path)
