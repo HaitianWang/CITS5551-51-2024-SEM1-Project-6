@@ -3,7 +3,6 @@ import numpy as np
 import rasterio
 import pandas as pd
 
-
 # Define the function to calculate indices
 def calculate_indices(blue, green, red, nir, re):
     indices = {}
@@ -71,12 +70,24 @@ def calculate_indices(blue, green, red, nir, re):
 
     return indices
 
+# Function to save the indices as .tif files
+def save_indices_as_tif(indices, folder_path, hor, cor, profile):
+    for index_name, index_data in indices.items():
+        tif_path = os.path.join(folder_path, f'{index_name}_{hor}_{cor}.tif')
+        with rasterio.open(
+            tif_path, 'w', driver='GTiff', height=index_data.shape[0], width=index_data.shape[1],
+            count=1, dtype=index_data.dtype, crs=profile['crs'], transform=profile['transform']
+        ) as dst:
+            dst.write(index_data, 1)
+        print(f'Saved {tif_path}')
 
 # Function to process each folder
 def process_folder(folder_path, hor, cor):
     try:
         # Read the .tif files
-        blue = rasterio.open(os.path.join(folder_path, f'Blue_{hor}_{cor}.tif')).read(1)
+        with rasterio.open(os.path.join(folder_path, f'Blue_{hor}_{cor}.tif')) as src:
+            blue = src.read(1)
+            profile = src.profile
         green = rasterio.open(os.path.join(folder_path, f'Green_{hor}_{cor}.tif')).read(1)
         red = rasterio.open(os.path.join(folder_path, f'Red_{hor}_{cor}.tif')).read(1)
         nir = rasterio.open(os.path.join(folder_path, f'NIR_{hor}_{cor}.tif')).read(1)
@@ -92,9 +103,11 @@ def process_folder(folder_path, hor, cor):
             df.to_csv(csv_path, index=False, header=False)
             print(f'Saved {csv_path}')
 
+        # Save indices as .tif files
+        save_indices_as_tif(indices, folder_path, hor, cor, profile)
+
     except Exception as e:
         print(f'Error processing {folder_path}: {e}')
-
 
 # Main function to traverse directories and process folders
 def main(base_path):
@@ -108,8 +121,7 @@ def main(base_path):
                 print(f'Processing folder: {folder_path}')
                 process_folder(folder_path, hor, cor)
 
-
 # Specify the base path where the folders are located
-base_path = r'E:\UWA\GENG 5551\2021 09 06 Test Split'
+base_path = r'E:\\UWA\\GENG 5551\\2021 09 06 Test Split'
 # Run the main function
 main(base_path)
