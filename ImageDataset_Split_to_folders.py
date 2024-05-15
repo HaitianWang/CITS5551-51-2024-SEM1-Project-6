@@ -53,8 +53,8 @@ def split_csv(csv_path, output_folder, tile_size_x, tile_size_y, width, height):
             sub_df.to_csv(os.path.join(folder_name, f"label_matrix_{i+1}_{j+1}.csv"), index=False)
 
 # Main execution block
-base_folder = r'C:\Simon\Master of Professional Engineering\Software Design Project\Research Image Dataset\2021 09 06 Kondinin barley E2\2021 09 06 Kondinin E2\map\Big Raw Dataset'
-output_folder = r'C:\Simon\Master of Professional Engineering\Software Design Project\Code Area\ImageData_Split'
+base_folder = r'E:\UWA\GENG 5551\2021 09 06 Test Images & Labels'
+output_folder = r'E:\UWA\GENG 5551\2021 09 06 Test Split'
 tile_size_x = 512
 tile_size_y = 512
 
@@ -67,5 +67,5 @@ images = ['Blue.tif', 'Green.tif', 'NIR.tif', 'Red.tif', 'RedEdge.tif', 'RGB.tif
 for image in images:
     split_image(os.path.join(base_folder, image), output_folder, tile_size_x, tile_size_y)
 
-csv_path = os.path.join(base_folder, 'label_matrix.csv')
+csv_path = r'E:\UWA\GENG 5551\2021 09 06 Test Images & Labels\GENG 5551 - NDVI Label v3.csv'
 split_csv(csv_path, output_folder, tile_size_x, tile_size_y, width, height)
