@@ -66,7 +66,7 @@ def create_dataset(base_path):
     return np.array(images), np.array(masks)
 
 # Load the dataset
-base_path = r'E:\\UWA\\GENG 5551\\2021 09 06 Test Split'
+base_path = r'E:\UWA\GENG 5551\2021 09 06 Test Split Select'
 X, y = create_dataset(base_path)
 
 # Normalize the input images
