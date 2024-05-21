@@ -22,7 +22,7 @@ def load_label_matrix(file_path):
 
 # 创建数据集
 def create_dataset(base_path):
-    indices = ['ExG', 'ExR', 'PRI', 'MGRVI', 'GNDVI', 'SAVI', 'MSAVI', 'NDVI', 'EVI', 'REIP', 'CI', 'OSAVI', 'TVI', 'MCARI', 'TCARI']
+    indices = ['ExG', 'ExR', 'PRI', 'MGRVI',  'SAVI', 'MSAVI',  'EVI', 'REIP', 'CI', 'OSAVI', 'TVI', 'MCARI', 'TCARI']
     images = []
     masks = []
 
@@ -62,7 +62,7 @@ def create_dataset(base_path):
     return np.array(images), np.array(masks)
 
 # 加载数据集
-base_path = '/home/haitian/Github/CITS5551-51-2024-SEM1-Project-6/2021 09 06 Test Split'
+base_path = './testset'
 X, y = create_dataset(base_path)
 
 # 打印数据形状以进行调试
@@ -81,55 +81,58 @@ num_classes = 4  # 0: vegetation, 1: weeds, 2: bare ground, 3: invalid
 print("One-hot encoding masks")
 y = to_categorical(y, num_classes=num_classes)
 
-# 定义 ResizeLayer
+
+#
+def calculate_accuracy(y_true, y_pred):
+    """
+    计算分类准确率
+    :param y_true: 实际标签，形状为 (batch_size, height, width)
+    :param y_pred: 预测标签，形状为 (batch_size, height, width)
+    :param num_classes: 类别数量
+    :return: 平均分类准确率
+    """
+    accuracies = []
+    for i in range(y_true.shape[0]):
+        true_labels = y_true[i].flatten()
+        pred_labels = y_pred[i].flatten()
+        
+        correct_predictions = np.sum(true_labels == pred_labels)
+        total_pixels = true_labels.size
+        
+        accuracy = correct_predictions / total_pixels
+        accuracies.append(accuracy)
+    
+    return np.mean(accuracies)
+
+
 class ResizeLayer(Layer):
-    def __init__(self, target_shape, **kwargs):
+    def __init__(self, target_height, target_width, **kwargs):
         super(ResizeLayer, self).__init__(**kwargs)
-        self.target_shape = target_shape
+        self.target_height = target_height
+        self.target_width = target_width
 
     def call(self, inputs):
-        return tf.image.resize(inputs, self.target_shape)
+        return tf.image.resize(inputs, (self.target_height, self.target_width))
+    
+# 自定义层用于应用 ReLU 激活
+class ReluLayer(Layer):
+    def call(self, inputs):
+        return tf.nn.relu(inputs)
+custom_objects = {
+    'ResizeLayer': ResizeLayer(512,512),
+    'ReluLayer': ReluLayer
+}
 
-    def get_config(self):
-        config = super(ResizeLayer, self).get_config()
-        config.update({"target_shape": self.target_shape})
-        return config
 
-    @classmethod
-    def from_config(cls, config):
-        target_shape = config.pop("target_shape")
-        return cls(target_shape=target_shape, **config)
 
-# 定义计算 IoU 的函数
-def calculate_iou(y_true, y_pred, num_classes):
-    iou_list = []
-    for cls in range(num_classes):
-        true_class = y_true == cls
-        pred_class = y_pred == cls
-        intersection = np.sum(np.logical_and(true_class, pred_class))
-        union = np.sum(np.logical_or(true_class, pred_class))
-        if union == 0:
-            iou = 0  # 如果没有类别在图像中，IOU 设置为 0
-        else:
-            iou = intersection / union
-        iou_list.append(iou)
-    return np.mean(iou_list)
-
-# 定义计算 mIoU 的函数
-def calculate_miou(y_true, y_pred, num_classes):
-    miou_list = []
-    for i in range(y_true.shape[0]):
-        iou = calculate_iou(y_true[i], y_pred[i], num_classes)
-        miou_list.append(iou)
-    return np.mean(miou_list)
-
-# 加载模型
-with tf.keras.utils.custom_object_scope({'ResizeLayer': ResizeLayer}):
-    model = load_model('inceptionv3_fcn_model.h5', compile=False)
+# 使用 custom_object_scope 加载模型
+with tf.keras.utils.custom_object_scope(custom_objects):
+    model = load_model('inceptionv3_fcn_model.h5',compile=False)
 
 # 拆分训练和验证数据集
 from sklearn.model_selection import train_test_split
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+# X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+X_val, y_val = create_dataset(base_path)
 
 # 使用模型预测
 y_pred = model.predict(X_val)
@@ -137,7 +140,43 @@ y_pred = model.predict(X_val)
 # 将预测结果转换为类别标签
 y_true_labels = np.argmax(y_val, axis=-1)
 y_pred_labels = np.argmax(y_pred, axis=-1)
+def calculate_miou(y_true, y_pred, num_classes):
+    """
+    计算平均交并比 (Mean Intersection over Union, mIoU)
+    :param y_true: 实际标签，形状为 (batch_size, height, width)
+    :param y_pred: 预测标签，形状为 (batch_size, height, width)
+    :param num_classes: 类别数量
+    :return: 平均交并比 (mIoU)
+    """
+    iou_list = []
+    for c in range(num_classes):
+        true_class = (y_true == c)
+        pred_class = (y_pred == c)
+        
+        intersection = np.sum(true_class & pred_class)
+        union = np.sum(true_class | pred_class)
+        print(c)
+        if union == 0:
+            iou = 1.0  # If there is no ground truth or predicted instance in this class
+        else:
+            iou = intersection / union
+            print(iou)
+        
+        iou_list.append(iou)
+    
+    miou = np.mean(iou_list)
+    return miou
+
+# Example usage
+miou = calculate_miou(y_true_labels, y_pred_labels, num_classes)
+print(f"Mean Intersection over Union (mIoU): {miou}")
 
 # 计算并输出mIoU
 miou = calculate_miou(y_true_labels, y_pred_labels, num_classes)
 print(f"Mean Intersection over Union (mIoU): {miou}")
+
+
+
+print(calculate_accuracy(y_true_labels, y_pred_labels))
+
+
