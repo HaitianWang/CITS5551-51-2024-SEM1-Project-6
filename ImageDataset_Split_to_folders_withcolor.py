@@ -48,31 +48,29 @@ def split_csv(csv_path, output_folder, tile_size_x, tile_size_y, width, height):
 def generate_color_map_image(csv_file, folder_name):
     print(f"Generating color map image for {csv_file} in {folder_name}")
     df = pd.read_csv(csv_file)
-    # 将DataFrame转换为numpy数组
     ndvi_mapped = df.to_numpy().astype(int)
 
-    # 定义颜色映射
     colors = {0: 'green', 1: 'red', 2: 'white', 3: 'yellow'}
-    # 创建一个空白的三通道图像
+
     ndvi_color_mapped = np.zeros((ndvi_mapped.shape[0], ndvi_mapped.shape[1], 3), dtype=np.uint8)
 
-    # 根据颜色映射填充颜色
+
     for i, color in colors.items():
-        # 获取颜色的RGB值
+
         color_rgb = np.array(plt.cm.colors.to_rgba(color)[:3]) * 255
-        # 应用颜色
+
         ndvi_color_mapped[ndvi_mapped == i] = color_rgb
 
-    # 设置保存图像的路径
+
     ndvi_color_path = os.path.join(folder_name, 'color_map_image.png')
 
-    # 使用plt.figure创建图形对象，避免使用plt.imshow直接显示
+
     fig, ax = plt.subplots()
     ax.imshow(ndvi_color_mapped)
-    ax.axis('off')  # 关闭坐标轴
-    plt.savefig(ndvi_color_path, bbox_inches='tight', pad_inches=0, dpi=96)  # 仅保存到文件
+    ax.axis('off')  
+    plt.savefig(ndvi_color_path, bbox_inches='tight', pad_inches=0, dpi=96)  
     print(f"Image saved to {ndvi_color_path}")
-    plt.close(fig)  # 关闭图形，释放资源
+    plt.close(fig)  
 
 def split_image(image_path, output_folder, tile_size_x, tile_size_y):
     with rasterio.open(image_path) as src:
@@ -91,8 +89,8 @@ def split_image(image_path, output_folder, tile_size_x, tile_size_y):
                 print(f"CSV file not found: {csv_file}")
 
 # Main execution block
-base_folder = r'E:\UWA\GENG 5551\2021 09 06 Test Images & Labels' #输入文件夹地址
-output_folder = r'E:\UWA\GENG 5551\2021 09 06 Test Split' #输出文件夹地址
+base_folder = r'E:\UWA\GENG 5551\2021 09 06 Test Images & Labels' 
+output_folder = r'E:\UWA\GENG 5551\2021 09 06 Test Split' 
 tile_size_x = 512
 tile_size_y = 512
 
@@ -105,5 +103,5 @@ images = ['Blue.tif', 'Green.tif', 'NIR.tif', 'Red.tif', 'RedEdge.tif', 'RGB.tif
 for image in images:
     split_image(os.path.join(base_folder, image), output_folder, tile_size_x, tile_size_y)
 
-csv_path = r'E:\UWA\GENG 5551\2021 09 06 Test Images & Labels\GENG 5551 - NDVI Label v3.csv' #csv文件地址
+csv_path = r'E:\UWA\GENG 5551\2021 09 06 Test Images & Labels\GENG 5551 - NDVI Label v3.csv' 
 split_csv(csv_path, output_folder, tile_size_x, tile_size_y, width, height)
