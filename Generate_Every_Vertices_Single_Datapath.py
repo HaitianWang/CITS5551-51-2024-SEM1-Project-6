@@ -31,7 +31,7 @@ with rasterio.open(nir_path) as nir_ds:
     nir_array = nir_ds.read(1).astype(np.float32)
 
 
-# 定义计算各个指数的函数
+
 def calculate_indices(R, G, B, RE, NIR):
     ExG = 2 * G - R - B
     ExR = 1.4 * R - G
@@ -46,17 +46,16 @@ def calculate_indices(R, G, B, RE, NIR):
     
     return ExG, ExR, PRI, MGRVI, GNDVI, SAVI, MSAVI, NDVI
 
-# 计算各个指数矩阵
+
 ExG, ExR, PRI, MGRVI, GNDVI, SAVI, MSAVI, NDVI = calculate_indices(red_array, green_array, blue_array, red_edge_array, nir_array)
 
-# 将矩阵转换为 DataFrame 并保存为 CSV 文件
 index_names = ['ExG', 'ExR', 'PRI', 'MGRVI', 'GNDVI', 'SAVI', 'MSAVI', 'NDVI']
 index_arrays = [ExG, ExR, PRI, MGRVI, GNDVI, SAVI, MSAVI, NDVI]
 
 for index_name, index_array in zip(index_names, index_arrays):
-    # 将矩阵转换为 DataFrame
+
     df = pd.DataFrame(index_array)
-    # 保存为 CSV 文件
+
     output_path = os.path.join(output_folder, f'{index_name}.csv')
     df.to_csv(output_path, index=False, header=False)
 
