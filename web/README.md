@@ -26,4 +26,4 @@ App.py 105行，db = pymysql.connect(host="localhost", user="root", password="12
 
 Sql表格：
 
-表名user: username, userid, pwd
+表名user: userId主键, username, pwd
