@@ -12,7 +12,7 @@ import core.main
 
 UPLOAD_FOLDER = r'./uploads'
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'tif'])
 app = Flask(__name__)
 app.secret_key = 'secret!'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
