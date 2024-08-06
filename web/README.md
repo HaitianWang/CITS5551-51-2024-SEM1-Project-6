@@ -12,7 +12,7 @@ python app.py
 
 terminal命令：
 
-npm install
+npm install之后会自动出现node_modules文件夹，注意这一步有报错是非常正常的
 
 npm run dev
 
@@ -26,4 +26,4 @@ App.py 105行，db = pymysql.connect(host="localhost", user="root", password="12
 
 Sql表格：
 
-表名user: username, userid, pwd
+表名user: userId主键, username, pwd
