@@ -8,7 +8,7 @@ export default {
   name: "Footer",
   data() {
     return {
-      msg: "2024,UWAIntelliCrop",
+      msg: "2024 UWAIntelliCrop",
     };
   },
 };

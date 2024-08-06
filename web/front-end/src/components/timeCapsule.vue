@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Discover Page</h1>
-    <p>Welcome to the Discover page!</p>
+    <h1>Time Capsule</h1>
+    <p>Welcome</p>
   </div>
 </template>
 
