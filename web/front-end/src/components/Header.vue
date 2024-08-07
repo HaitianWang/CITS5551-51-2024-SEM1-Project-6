@@ -12,9 +12,11 @@
     </nav>
     <div id="word">
       <h1>{{ msg }}</h1>
+      <i class="el-icon-s-home home-icon" v-on:click="goMainPage"></i>
     </div>
   </div>
 </template>
+
 <script>
   export default {
     name: "Header",
@@ -29,6 +31,12 @@
         this.$router.push({
           path: "/frontPage",
           name: "frontPage",
+        });
+      },
+      goMainPage() {
+        this.$router.push({
+          path: "/mainPage",
+          name: "mainPage",
         });
       },
     },
@@ -48,6 +56,8 @@
   }
 
   #word {
+    display: flex;
+    align-items: center;
     margin: 0;
   }
 
@@ -55,6 +65,7 @@
     color: white; /* 确保标题也是白色 */
     letter-spacing: 1px;
     font-size: 1.8em;
+    margin-right: 10px; /* 确保图标与文字有间距 */
   }
 
   .el-menu-demo {
@@ -83,6 +94,17 @@
 
   .nav-link:hover {
     text-decoration: none; /* 保持悬停时无下划线 */
+    color: #d9f0ea; /* 悬停时稍微变亮的颜色，可选 */
+  }
+
+  .home-icon {
+    font-size: 28px; /* 调整图标大小 */
+    cursor: pointer;
+    color: white; /* 确保图标也是白色 */
+    padding-left: 20px;
+  }
+
+  .home-icon:hover {
     color: #d9f0ea; /* 悬停时稍微变亮的颜色，可选 */
   }
 </style>
