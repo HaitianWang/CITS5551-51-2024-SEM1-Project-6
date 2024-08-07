@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>Time Capsule</h1>
-    <p>Welcome</p>
+    <p>Welcome, {{ $route.query.username }}</p>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Discover'
+    name: 'TimeCapsule'
   };
 </script>

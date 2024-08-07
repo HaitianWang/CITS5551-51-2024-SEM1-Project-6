@@ -1,4 +1,4 @@
-<template>
+uploadPage，给我修改完的代码：<template>
   <div id="Content">
 
     <el-dialog

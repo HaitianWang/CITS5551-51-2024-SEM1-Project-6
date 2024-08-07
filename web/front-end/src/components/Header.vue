@@ -3,12 +3,12 @@
     <div class="top-left-edition">
       <span class="user-info">
         <i class="el-icon-user" style="font-size: 23px"></i>
-        <span id="name">{{ this.$route.query.username }}</span>
+        <span id="name">{{ username }}</span>
       </span>
     </div>
     <nav class="middle">
-      <router-link to="/uploadPage" class="nav-link">Upload</router-link>
-      <router-link to="/timeCapsule" class="nav-link">TimeCapsule</router-link>
+      <router-link :to="{ path: '/uploadPage', query: { username: username } }" class="nav-link">Upload</router-link>
+      <router-link :to="{ path: '/timeCapsule', query: { username: username } }" class="nav-link">TimeCapsule</router-link>
     </nav>
     <div id="word">
       <h1>{{ msg }}</h1>
@@ -20,6 +20,7 @@
 <script>
   export default {
     name: "Header",
+    props: ['username'],
     data() {
       return {
         msg: "Precision Agriculture: UWAIntelliCrop",
@@ -37,6 +38,9 @@
         this.$router.push({
           path: "/mainPage",
           name: "mainPage",
+          query: {
+            username: this.username
+          }
         });
       },
     },
@@ -98,10 +102,9 @@
   }
 
   .home-icon {
-    font-size: 28px; /* 调整图标大小 */
+    font-size: 30px; /* 调整图标大小 */
     cursor: pointer;
     color: white; /* 确保图标也是白色 */
-    padding-left: 20px;
   }
 
   .home-icon:hover {
