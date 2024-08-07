@@ -20,11 +20,11 @@ npm run dev
 
 ## 修改sql信息：
 
-App.py 105行，db = pymysql.connect(host="localhost", user="root", password="12345678", database="test", charset="utf8")
+App.py 105行和127行，db = pymysql.connect(host="localhost", user="root", password="12345678", database="test", charset="utf8")
 
 改成你自己的数据库用户名、密码、数据库名
 
 
 Sql表格：
 
-表名user: userId主键, username, pwd
+表名user: userId主键且设置自动递增, username, pwd

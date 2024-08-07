@@ -124,7 +124,7 @@ def login():
 @app.route('/regi', methods=['POST'])
 def regi():
     print("regi")
-    db = pymysql.connect(host="localhost", user="root", password="123456", database="skin", charset="utf8")
+    db = pymysql.connect(host="localhost", user="root", password="123456", database="test", charset="utf8")
     # 使用cursor()方法获取操作游标
     cursor = db.cursor()
     username = request.values.get("username")
