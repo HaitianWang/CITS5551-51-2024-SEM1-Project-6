@@ -124,7 +124,7 @@ def login():
 @app.route('/regi', methods=['POST'])
 def regi():
     print("regi")
-    db = pymysql.connect(host="localhost", user="root", password="123456", database="test", charset="utf8")
+    db = pymysql.connect(host="localhost", user="root", password="12345678", database="test", charset="utf8")
     # 使用cursor()方法获取操作游标
     cursor = db.cursor()
     username = request.values.get("username")
@@ -141,7 +141,7 @@ def regi():
         print("res ", response.response)
         return response
     #sql2 = "INSERT INTO user VALUES ('xew','123456')"
-    sql2 = "INSERT INTO user VALUES ('%s','%s')" % (username, pwd)
+    sql2 = "INSERT INTO user(username, pwd) VALUES ('%s','%s')" % (username, pwd)
     cursor.execute(sql2)
     db.commit()
     print("sql2")
