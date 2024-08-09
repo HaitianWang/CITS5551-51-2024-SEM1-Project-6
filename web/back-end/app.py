@@ -151,6 +151,7 @@ def regi():
     return response
 
 
+
 if __name__ == '__main__':
     files = [
         'uploads', 'tmp/ct', 'tmp/draw',
