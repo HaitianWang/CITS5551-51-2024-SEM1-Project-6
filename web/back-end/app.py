@@ -6,7 +6,7 @@ from datetime import timedelta
 from flask import *
 from processor.AIDetector_pytorch import Detector
 import pymysql
-import getjson
+#import getjson
 
 import core.main
 
